@@ -9,12 +9,18 @@
                 <div>
                     <p class="mb-0">{!! nl2br(e($micropost->content)) !!}</p>
                 </div>
-                <div>
-                    @if (Auth::id() == $micropost->user_id)
-                        {!! Form::open(['route' => ['microposts.destroy', $micropost->id], 'method' => 'delete']) !!}
-                            {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
-                        {!! Form::close() !!}
-                    @endif
+                <!--ボタンを横並びにするためのdiv-->
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        <!--お気に入りボタンをinclude(favorite_button.blade.php)-->
+                        @include('user_favorite.favorite_button')
+                        @if (Auth::id() == $micropost->user_id)
+                            <!--削除ボタン-->
+                            {!! Form::open(['route' => ['microposts.destroy', $micropost->id], 'method' => 'delete']) !!}
+                                {!! Form::submit('Delete', ['class' => 'btn btn-outline-danger btn-sm']) !!}
+                            {!! Form::close() !!}
+                        @endif
+                    </div>
                 </div>
             </div>
         </li>
